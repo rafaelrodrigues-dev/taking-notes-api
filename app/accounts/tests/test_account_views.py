@@ -40,52 +40,30 @@ class UserViewTests(APITestCase):
     
     def test_retrieve_self(self):
         self.auth(self.token1)
-        url = reverse('user-detail', kwargs={'pk': self.user1.pk})
+        url = reverse('user-detail')
         response = self.client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert response.data['username'] == self.user1.username
 
-    def test_retrieve_other_user_returns_404(self):
-        self.auth(self.token1)
-        url = reverse('user-detail', kwargs={'pk': self.user2.pk})
-        response = self.client.get(url)
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-
     def test_patch_own_user(self):
         self.auth(self.token1)
-        url = reverse('user-detail', kwargs={'pk': self.user1.pk})
+        url = reverse('user-detail')
         payload = {'first_name': 'Updated'}
         response = self.client.patch(url, payload)
         assert response.status_code == status.HTTP_200_OK
         self.user1.refresh_from_db()
         assert self.user1.first_name == 'Updated'
 
-    def test_patch_other_user_returns_404(self):
-        self.auth(self.token1)
-        url = reverse('user-detail', kwargs={'pk': self.user2.pk})
-        payload = {'first_name': 'Hacker'}
-        response = self.client.patch(url, payload)
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        self.user2.refresh_from_db()
-        assert self.user2.first_name == ''
-
     def test_delete_own_user(self):
         self.auth(self.token1)
-        url = reverse('user-detail', kwargs={'pk': self.user1.pk})
+        url = reverse('user-detail')
         response = self.client.delete(url)
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert not User.objects.filter(pk=self.user1.pk).exists()
 
-    def test_delete_other_user_returns_404(self):
-        self.auth(self.token1)
-        url = reverse('user-detail', kwargs={'pk': self.user2.pk})
-        response = self.client.delete(url)
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert User.objects.filter(pk=self.user2.pk).exists()
-
     def test_put_not_allowed(self):
         self.auth(self.token1)
-        url = reverse('user-detail', kwargs={'pk': self.user1.pk})
+        url = reverse('user-detail')
         payload = {
             'username': 'ignored',
             'email': 'ignored@example.com',

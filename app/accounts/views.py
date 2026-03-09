@@ -18,5 +18,5 @@ class UserAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     http_method_names = ['get', 'options', 'head', 'patch', 'delete']
 
-    def get_queryset(self):
-        return User.objects.filter(pk=self.request.user.pk)
+    def get_object(self):
+        return self.request.user
