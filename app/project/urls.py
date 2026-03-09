@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/notes/',include('notes.urls')),
     path('api-token-auth/', views.obtain_auth_token),
     path('api/accounts/',include('accounts.urls')),
+    path('api/tasks/',include('tasks.urls')),
 ]
