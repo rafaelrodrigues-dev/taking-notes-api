@@ -1,6 +1,6 @@
 # Note-Taking Backend API
 
-This is a Django-based REST API for a note-taking application. It allows users to register, authenticate, and manage their personal notes. The API is built using Django REST Framework (DRF) and supports token-based authentication.
+This is a Django-based REST API for a note-taking application. It allows users to register, authenticate, and manage their personal notes. The API is built using Django REST Framework (DRF) and supports token-based authentication. You can see this application in action at https://takingnotes.lovable.app
 
 ## Features
 
