@@ -17,4 +17,10 @@ chmod -R 755 /data/web/media
 su-exec duser python manage.py collectstatic --noinput
 su-exec duser python manage.py makemigrations --noinput
 su-exec duser python manage.py migrate --noinput
-exec su-exec duser gunicorn project.wsgi:application --bind 0.0.0.0:8000
+exec su-exec duser gunicorn \
+    --bind 0.0.0.0:8000 \
+    --workers 4 \
+    --timeout 30 \
+    --max-requests 1000 \
+    --max-requests-jitter 50 \
+    project.wsgi:application

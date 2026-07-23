@@ -1,7 +1,6 @@
-version: '3.9'
 services:
   db:
-    image: postgres
+    image: postgres:17
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
@@ -12,6 +11,8 @@ services:
     image: rafaelrodriguess/note-taking-api
     ports:
       - "8000:8000"
+    depends_on:
+      - db
     env_file:
       - ./dotenv_files/.env
     networks:
